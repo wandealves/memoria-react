@@ -102,6 +102,23 @@ let game = {
         this.cards[randomIndex]
       ];
     }
+  },
+  flipCard: function (cardId, gameOverCallBack, noMatchCallback) {
+    if (this.setCard(cardId)) {
+      if (this.secondCard) {
+        if (this.checkMatch()) {
+          this.clearCards();
+          if (this.checkGameOver()) {
+            gameOverCallBack();
+          }
+        } else {
+          setTimeout(() => {
+            this.unflipCards();
+            noMatchCallback();
+          }, 1000);
+        }
+      }
+    }
   }
 };
 
